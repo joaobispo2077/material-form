@@ -70,7 +70,7 @@ function PersonalData({ handleSubmit, validations }) {
         }
         label="Novidades"
       />
-      <Button type="submit" variant="contained" color="primary" >Cadastrar</Button>
+      <Button type="submit" variant="contained" color="primary">Próximo</Button>
     </form>
   )
 }

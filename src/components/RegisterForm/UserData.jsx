@@ -20,12 +20,18 @@ const UserData = ({ handleSubmit, validations }) => {
     } else {
       setErrors({ [name]: { error: false, message: "" } })
     }
+  }
+
+  const handleValidateForm = () => {
+    const errorsValidation = Object.keys(errors).filter(field => errors[field].error === true);
+    const hasntErrors = (errorsValidation.length === 0);
+    return hasntErrors;
 
   }
   return (
     <form onSubmit={(event) => {
       event.preventDefault();
-      handleSubmit({ email, password });
+      if (handleValidateForm()) handleSubmit({ email, password });
     }
     }>
       <TextField id="email" label="E-mail" type="email" variant="outlined" fullWidth required margin="normal"
@@ -42,7 +48,7 @@ const UserData = ({ handleSubmit, validations }) => {
         helperText={errors.password.message}
         onBlur={handleValidateFields}
       />
-      <Button type="submit" variant="contained" color="primary">Cadastrar</Button>
+      <Button type="submit" variant="contained" color="primary">Próximo</Button>
     </form>);
 }
 
