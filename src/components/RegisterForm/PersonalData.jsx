@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Button, TextField, Checkbox, FormControlLabel } from '@material-ui/core';
 import registerValidations from '../../contexts/RegisterValidations';
+import useErrors from '../../hooks/useErrors';
 
 function PersonalData({ handleSubmit }) {
   const [name, setName] = useState('');
@@ -11,29 +12,13 @@ function PersonalData({ handleSubmit }) {
 
   const validations = useContext(registerValidations);
 
-  const [errors, setErrors] = useState({
-    cpf: {
-      error: false,
-      message: ""
-    }
-  });
-
-  const handleValidateFields = (event) => {
-    const { name, value } = event.target;
-    const hasError = validations[name](value);
-
-    if (hasError) {
-      setErrors({ [name]: { error: true, message: hasError.message } })
-    } else {
-      setErrors({ [name]: { error: false, message: "" } })
-    }
-  }
+  const [errors, handleValidateFields, handleValidateForm] = useErrors(validations);
 
   return (
     <form
       onSubmit={(event) => {
         event.preventDefault();
-        handleSubmit({ name, lastname, cpf, promotions, news });
+        if (handleValidateForm()) handleSubmit({ name, lastname, cpf, promotions, news });
       }}
     >
       <TextField
