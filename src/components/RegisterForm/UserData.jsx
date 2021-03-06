@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Button, TextField } from '@material-ui/core';
+import registerValidations from '../../contexts/RegisterValidations';
 
-const UserData = ({ handleSubmit, validations }) => {
+const UserData = ({ handleSubmit }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
   const [errors, setErrors] = useState({
     password: {
       error: false,
       message: ""
     }
   });
+
+  const validations = useContext(registerValidations);
 
   const handleValidateFields = (event) => {
     const { name, value } = event.target;

@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Button, TextField, Checkbox, FormControlLabel } from '@material-ui/core';
+import registerValidations from '../../contexts/RegisterValidations';
 
-function PersonalData({ handleSubmit, validations }) {
+function PersonalData({ handleSubmit }) {
   const [name, setName] = useState('');
   const [lastname, setLastname] = useState('');
   const [cpf, setCPF] = useState('');
   const [promotions, setPromotions] = useState(true);
   const [news, setNews] = useState(true);
+
+  const validations = useContext(registerValidations);
 
   const [errors, setErrors] = useState({
     cpf: {
@@ -24,8 +27,8 @@ function PersonalData({ handleSubmit, validations }) {
     } else {
       setErrors({ [name]: { error: false, message: "" } })
     }
-
   }
+
   return (
     <form
       onSubmit={(event) => {
