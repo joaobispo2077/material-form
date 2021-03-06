@@ -4,6 +4,8 @@ import DeliveryData from './DeliveryData';
 import PersonalData from './PersonalData';
 import UserData from './UserData';
 
+import validations from '../../models/register';
+
 function RegisterForm({ handleSubmit }) {
   const [stage, setStage] = useState(0);
   const [collectData, setCollectData] = useState({});
@@ -22,8 +24,8 @@ function RegisterForm({ handleSubmit }) {
   }
 
   const stages = [
-    <UserData handleSubmit={handleCollectData} />,
-    <PersonalData handleSubmit={handleCollectData} />,
+    <UserData handleSubmit={handleCollectData} validations={validations} />,
+    <PersonalData handleSubmit={handleCollectData} validations={validations} />,
     <DeliveryData handleSubmit={handleCollectData} />,
     <Typography variant="h4">Obrigado pelo cadastro!</Typography>
   ];

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, TextField, Checkbox, FormControlLabel } from '@material-ui/core';
 
-function PersonalData({ handleSubmit }) {
+function PersonalData({ handleSubmit, validations }) {
   const [name, setName] = useState('');
   const [lastname, setLastname] = useState('');
   const [cpf, setCPF] = useState('');
@@ -15,19 +15,17 @@ function PersonalData({ handleSubmit }) {
     }
   });
 
-  const handleValidateCPF = () => {
-    console.log('irra')
-    if (cpf.length !== 11) {
-      const error = true;
-      const message = "O CPF deve ter 11 dígitos."
-      setErrors({ cpf: { error, message } })
+  const handleValidateFields = (event) => {
+    const { name, value } = event.target;
+    const hasError = validations[name](value);
+
+    if (hasError) {
+      setErrors({ [name]: { error: true, message: hasError.message } })
     } else {
-      setErrors({ cpf: { error: false, message: "" } })
+      setErrors({ [name]: { error: false, message: "" } })
     }
 
   }
-
-
   return (
     <form
       onSubmit={(event) => {
@@ -44,11 +42,11 @@ function PersonalData({ handleSubmit }) {
         onChange={(event) => setLastname(event.target.value)} value={lastname}
       />
       <TextField
-        id="cpf" label="CPF" variant="outlined" fullWidth required margin="normal"
+        id="cpf" name="cpf" label="CPF" variant="outlined" fullWidth required margin="normal"
         onChange={(event) => setCPF(event.target.value)} value={cpf}
         error={errors.cpf.error}
         helperText={errors.cpf.message}
-        onBlur={handleValidateCPF}
+        onBlur={handleValidateFields}
       />
       <FormControlLabel
         control={
